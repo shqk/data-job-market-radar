@@ -1,0 +1,34 @@
+[project]
+name = "data-job-market-radar"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Nathan", email = "63520059+shqk@users.noreply.github.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "dbt-core>=1.11.8",
+    "dbt-duckdb>=1.10.1",
+    "duckdb>=1.5.2",
+    "pandas>=3.0.2",
+    "pyarrow>=24.0.0",
+    "pydantic-settings>=2.14.0",
+    "python-dotenv>=1.2.2",
+    "requests>=2.33.1",
+    "rich>=15.0.0",
+]
+
+[project.scripts]
+data-job-market-radar = "data_job_market_radar:main"
+
+[build-system]
+requires = ["uv_build>=0.9.10,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "pytest>=9.0.3",
+    "ruff>=0.15.12",
+]
