@@ -1,1 +1,10 @@
-.venv
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+data/bronze/
+data/silver/
+data/gold/
+*.duckdb
+*.duckdb.wal
