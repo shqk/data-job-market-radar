@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [project.scripts]
-data-job-market-radar = "data_job_market_radar:main"
+data-job-market-radar = "data_job_market_radar.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.9.10,<0.10.0"]
