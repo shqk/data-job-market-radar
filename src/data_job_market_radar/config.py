@@ -1,6 +1,6 @@
 # Load env variable at runtime
 from functools import lru_cache
-from .models.config import Settings
+from .models.settings import Settings
 
 
 # https://fastapi.tiangolo.com/advanced/settings/#creating-the-settings-only-once-with-lru-cache

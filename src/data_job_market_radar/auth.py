@@ -1,7 +1,7 @@
 # API auth only
 import httpx
-from .models.auth import Token
-from .models.config import Settings
+from .models.token import Token
+from .models.settings import Settings
 
 
 class AuthenticationError(RuntimeError):
