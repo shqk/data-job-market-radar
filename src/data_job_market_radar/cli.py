@@ -10,4 +10,7 @@ def main() -> None:
     console.print(settings)
 
     token = get_access_token(settings=settings)
-    console.print(token)
+    console.print("[green]Token retrieved successfully[/green]")
+    console.print(f"Token type: {token.token_type}")
+    console.print(f"Expires in: {token.expires_in}")
+    console.print(f"Expires at: {token.expires_at}")
