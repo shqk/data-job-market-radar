@@ -25,4 +25,4 @@ class Token(BaseModel):
     
     @property
     def authorization_header(self) -> str:
-        return f"{self.token_type}"
+        return f"{self.token_type} {self.access_token}"

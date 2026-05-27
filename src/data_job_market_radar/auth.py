@@ -23,15 +23,16 @@ def get_access_token(settings: Settings) -> Token:
     params = {"realm": "/partenaire"}
 
     try:
-        response = httpx.post(
-            url,
-            params=params,
-            data=body,
-            headers=headers,
-            follow_redirects=True,
-            timeout=30.0,
-        )
-        response.raise_for_status()
+        with httpx.Client() as client:
+            response = client.post(
+                url,
+                params=params,
+                data=body,
+                headers=headers,
+                follow_redirects=True,
+                timeout=30.0,
+            )
+            response.raise_for_status()
     except httpx.HTTPError as exc:
         raise AuthenticationError(
             "Failed to retrieve France Travail access token"
