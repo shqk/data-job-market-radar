@@ -18,4 +18,13 @@ def main() -> None:
 
     client = FranceTravailClient(settings=settings, token=token)
 
-    print(client.search_jobs("data", "0-149").json())
+    response = client.search_jobs("data engineer", "0-1")
+
+    console.print("[green]Search request succeeded[/green]")
+    console.print(f"Status code: {response.status_code}")
+    console.print(f"Content-Range: {response.headers.get('content-range')}")
+    console.print(f"Accept-Range: {response.headers.get('accept-range')}")
+
+    payload = response.json()
+    console.print(f"Number of results: {len(payload.get('resultats', []))}")
+

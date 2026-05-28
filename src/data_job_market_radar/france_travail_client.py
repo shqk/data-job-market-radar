@@ -29,8 +29,19 @@ class FranceTravailClient():
             "range" : job_range
         }
 
-        with httpx.Client() as client:
-            jobs = client.get(url, headers=self._headers(), params=params)
+
+        try:
+            with httpx.Client() as client:
+                jobs = client.get(url, headers=self._headers(), params=params, timeout=30.0)
+                jobs.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise FranceTravailApiError(
+                f"France Travail search endpoint returned status " f"{exc.response.status_code}: {exc.response.text}"
+            ) from exc
+        except httpx.RequestError as exc:
+            raise FranceTravailApiError(
+                "Could not reach France Travail search endpoint."
+            ) from exc
         
         print(jobs.request.url)
         
