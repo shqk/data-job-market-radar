@@ -33,16 +33,16 @@ def save_raw_search_response(base_dir: Path, query: str, range_: str, response: 
     # Sauvegarder les données
 
     # Response
-    with open(raw_dir / "response.json", "w", encoding='utf-8') as f:
+    with open(raw_dir / "response.json", "w", encoding="utf-8") as f:
         json.dump(response.json(), f, indent=2)
     
     # Headers
-    with open(raw_dir / "headers.json", "w", encoding='utf-8') as f:
+    with open(raw_dir / "headers.json", "w", encoding="utf-8") as f:
         json.dump(dict(response.headers), f, indent=2)
     
+    request = response.request
     # Request
-    with open(raw_dir / "request.json", "w", encoding='utf-8') as f:
-        request = response.request
+    with open(raw_dir / "request.json", "w", encoding="utf-8") as f:
 
         request_data = {
             "method" : request.method,
@@ -58,5 +58,17 @@ def save_raw_search_response(base_dir: Path, query: str, range_: str, response: 
         json.dump(request_data, f, indent=2)
     
     # Metadata
+    with open(raw_dir / "metadata.json", "w", encoding="utf-8") as f:
+        metadata = {
+            "source" : "france_travail",
+            "endpoint" : "france_travail",
+            "query" : query,
+            "range" : range_,
+            "status_code" : response.status_code,
+            "content_range" : response.headers.get("content-range"),
+            "accept_range" : response.headers.get("accept-range"),
+            "result_count" : len(response.json().get("resultats", [])),
+        }
+        json.dump(metadata, f, indent=2)
     
     return raw_dir
