@@ -16,13 +16,13 @@ class FranceTravailClient():
     
     def _headers(self) -> dict[str, str]:
         if self.token.is_expired:
-            raise FranceTravailApiError
+            raise FranceTravailApiError("Access token is expired.")
         return {
             "Authorization" : self.token.authorization_header,
             "Accept" : "application/json"
         }
     
-    def search_jobs(self, keywords: str, job_range: str):
+    def search_jobs(self, keywords: str, job_range: str) -> httpx.Response:
         url = self.settings.search_url
         params = {
             "motsCles" : keywords,
@@ -42,7 +42,5 @@ class FranceTravailClient():
             raise FranceTravailApiError(
                 "Could not reach France Travail search endpoint."
             ) from exc
-        
-        print(jobs.request.url)
         
         return jobs

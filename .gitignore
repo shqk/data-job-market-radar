@@ -8,3 +8,7 @@ data/silver/
 data/gold/
 *.duckdb
 *.duckdb.wal
+
+.vscode
+data/raw/france_travail/offres/search*
+.DS_Store
