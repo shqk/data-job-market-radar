@@ -6,6 +6,9 @@ import httpx
 from pathlib import Path
 from datetime import date, datetime, timezone
 
+class RawStorageError(Exception):
+    pass
+
 def slugify_query(query: str) -> str:
     value = query.strip().lower()
     value = re.sub(r"\s+", "_", value)
@@ -25,50 +28,49 @@ def build_path(base_dir: Path, query: str, range_: str, search_date: date) -> Pa
         f"range={range_}"
     )
 
+def write_json(path: Path, payload: dict) -> None:
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+    except OSError as exc:
+        raise RawStorageError(
+            f"Could not write raw files to {path}" 
+        ) from exc
+
 def save_raw_search_response(base_dir: Path, query: str, range_: str, response: httpx.Response) -> Path:
     # Créer le dossier
-    raw_dir = build_path(base_dir=base_dir, query=slugify_query(query), range_=range_, search_date=datetime.today())
+    raw_dir = build_path(base_dir=base_dir, query=slugify_query(query), range_=range_, search_date=date.today())
     raw_dir.mkdir(parents=True, exist_ok=True)
 
-    # Sauvegarder les données
-
-    # Response
-    with open(raw_dir / "response.json", "w", encoding="utf-8") as f:
-        json.dump(response.json(), f, indent=2)
-    
-    # Headers
-    with open(raw_dir / "headers.json", "w", encoding="utf-8") as f:
-        json.dump(dict(response.headers), f, indent=2)
-    
     request = response.request
-    # Request
-    with open(raw_dir / "request.json", "w", encoding="utf-8") as f:
 
-        request_data = {
-            "method" : request.method,
-            "url" : str(request.url),
-            "params" : dict(request.url.params),
-            "headers" : {
-                k: v
-                for k, v in request.headers.items()
-                if k != 'authorization'
-            }
-        }
+    write_json(raw_dir / "response.json", response.json())
 
-        json.dump(request_data, f, indent=2)
-    
-    # Metadata
-    with open(raw_dir / "metadata.json", "w", encoding="utf-8") as f:
-        metadata = {
-            "source" : "france_travail",
-            "endpoint" : "france_travail",
-            "query" : query,
-            "range" : range_,
-            "status_code" : response.status_code,
-            "content_range" : response.headers.get("content-range"),
-            "accept_range" : response.headers.get("accept-range"),
-            "result_count" : len(response.json().get("resultats", [])),
+    request_data = {
+        "method" : request.method,
+        "url" : str(request.url),
+        "params" : dict(request.url.params),
+        "headers" : {
+            k: v
+            for k, v in request.headers.items()
+            if k.lower() != 'authorization'
         }
-        json.dump(metadata, f, indent=2)
-    
+    }
+
+    metadata = {
+        "source" : "france_travail",
+        "endpoint" : "france_travail",
+        "query" : query,
+        "range" : range_,
+        "status_code" : response.status_code,
+        "content_range" : response.headers.get("content-range"),
+        "accept_range" : response.headers.get("accept-range"),
+        "result_count" : len(response.json().get("resultats", [])),
+        "saved_at" : datetime.now(timezone.utc).isoformat()
+    }
+
+    write_json(raw_dir / "headers.json", dict(response.headers))
+    write_json(raw_dir / "request.json", request_data)
+    write_json(raw_dir / "metadata.json", metadata)
+
     return raw_dir

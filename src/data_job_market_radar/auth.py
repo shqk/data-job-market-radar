@@ -49,7 +49,7 @@ def get_access_token(settings: Settings) -> Token:
             "France Travail tojen response is not valid JSON."
         ) from exc
     try:
-        return Token.model_validate(response.json())
+        return Token.model_validate(payload)
     except ValueError as exc:
         raise AuthenticationError(
             "France Travail token response is not valid JSON."
