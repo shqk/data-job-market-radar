@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import typer
 from rich.console import Console
+
 from data_job_market_radar.config import get_settings
 from data_job_market_radar.auth import get_access_token, AuthenticationError
 from data_job_market_radar.france_travail_client import (
@@ -7,7 +10,6 @@ from data_job_market_radar.france_travail_client import (
     FranceTravailApiError,
 )
 from data_job_market_radar.storage import save_raw_search_response
-from pathlib import Path
 
 app = typer.Typer()
 console = Console()
@@ -55,6 +57,8 @@ def ingest_raw_sample() -> None:
         save_raw_search_response(
             Path("data/raw"), query=query, range_=range_, response=response
         )
+
+        console.print(f"[green] {response}")
 
     except AuthenticationError as exc:
         console.print(f"[red]Authentication failed:[/red] {exc}")
