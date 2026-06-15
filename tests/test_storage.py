@@ -131,5 +131,3 @@ def test_save_raw_search_response_save_files(tmp_path):
         }
 
         assert "authorization" not in request_data["headers"]
-
-        test = {"accept": "application/json"}
