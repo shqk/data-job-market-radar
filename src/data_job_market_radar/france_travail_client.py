@@ -1,6 +1,7 @@
-from .models.token import Token
-from .models.settings import Settings
 import httpx
+
+from .models.settings import Settings
+from .models.token import Token
 
 # Encapsulate API calls
 
@@ -30,9 +31,7 @@ class FranceTravailClient:
 
         try:
             with httpx.Client() as client:
-                jobs = client.get(
-                    url, headers=self._headers(), params=params, timeout=30.0
-                )
+                jobs = client.get(url, headers=self._headers(), params=params, timeout=30.0)
                 jobs.raise_for_status()
         except httpx.HTTPStatusError as exc:
             raise FranceTravailApiError(
@@ -40,8 +39,6 @@ class FranceTravailClient:
                 f"{exc.response.status_code}: {exc.response.text}"
             ) from exc
         except httpx.RequestError as exc:
-            raise FranceTravailApiError(
-                "Could not reach France Travail search endpoint."
-            ) from exc
+            raise FranceTravailApiError("Could not reach France Travail search endpoint.") from exc
 
         return jobs

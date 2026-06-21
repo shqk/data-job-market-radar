@@ -1,5 +1,6 @@
 # Load env variable at runtime
 from functools import lru_cache
+
 from .models.settings import Settings
 
 

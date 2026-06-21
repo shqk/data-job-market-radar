@@ -1,7 +1,8 @@
 # API auth only
 import httpx
-from .models.token import Token
+
 from .models.settings import Settings
+from .models.token import Token
 
 
 class AuthenticationError(RuntimeError):
@@ -34,23 +35,15 @@ def get_access_token(settings: Settings) -> Token:
             )
             response.raise_for_status()
     except httpx.HTTPError as exc:
-        raise AuthenticationError(
-            "Failed to retrieve France Travail access token"
-        ) from exc
+        raise AuthenticationError("Failed to retrieve France Travail access token") from exc
     except httpx.RequestError as exc:
-        raise AuthenticationError(
-            "Could not reach France Travail token endpoint."
-        ) from exc
+        raise AuthenticationError("Could not reach France Travail token endpoint.") from exc
 
     try:
         payload = response.json()
     except ValueError as exc:
-        raise AuthenticationError(
-            "France Travail tojen response is not valid JSON."
-        ) from exc
+        raise AuthenticationError("France Travail tojen response is not valid JSON.") from exc
     try:
         return Token.model_validate(payload)
     except ValueError as exc:
-        raise AuthenticationError(
-            "France Travail token response is not valid JSON."
-        ) from exc
+        raise AuthenticationError("France Travail token response is not valid JSON.") from exc

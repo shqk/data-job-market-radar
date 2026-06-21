@@ -1,14 +1,14 @@
+import json
 from datetime import date, datetime
 from pathlib import Path
-import json
 
-import pytest
 import httpx
+import pytest
 
 from data_job_market_radar.storage import (
-    slugify_query,
     build_path,
     save_raw_search_response,
+    slugify_query,
 )
 
 
@@ -81,9 +81,7 @@ def test_save_raw_search_response_save_files(tmp_path):
     )
 
     assert (
-        save_raw_search_response(
-            base_dir=tmp_path, query=query, range_=range_, response=response
-        )
+        save_raw_search_response(base_dir=tmp_path, query=query, range_=range_, response=response)
         == file_path
     )
 
@@ -92,7 +90,7 @@ def test_save_raw_search_response_save_files(tmp_path):
     assert (file_path / "metadata.json").exists()
     assert (file_path / "request.json").exists()
 
-    with open(file_path / "response.json", "r") as f:
+    with open(file_path / "response.json") as f:
         response_data = json.load(f)
 
         assert response_data["resultats"] == [
@@ -101,15 +99,18 @@ def test_save_raw_search_response_save_files(tmp_path):
             {"id": "id3"},
         ]
 
-    with open(file_path / "headers.json", "r") as f:
+    with open(file_path / "headers.json") as f:
         headers_data = json.load(f)
         assert headers_data == response.headers
 
-    with open(file_path / "metadata.json", "r") as f:
+    with open(file_path / "metadata.json") as f:
         metadata_data = json.load(f)
 
-        assert metadata_data["source"] == "france_travail" 
-        assert metadata_data["endpoint"] == "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search" 
+        assert metadata_data["source"] == "france_travail"
+        assert (
+            metadata_data["endpoint"]
+            == "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search"
+        )
         assert metadata_data["query"] == query
         assert metadata_data["range"] == range_
         assert metadata_data["status_code"] == response.status_code
@@ -118,16 +119,14 @@ def test_save_raw_search_response_save_files(tmp_path):
         assert metadata_data["result_count"] == 3
         assert datetime.fromisoformat(metadata_data["saved_at"])
 
-    with open(file_path / "request.json", "r") as f:
+    with open(file_path / "request.json") as f:
         request_data = json.load(f)
 
         assert request_data == {
             "method": request.method,
             "url": str(request.url),
             "params": dict(request.url.params),
-            "headers": {
-                k: v for k, v in request.headers.items() if k.lower() != "authorization"
-            },
+            "headers": {k: v for k, v in request.headers.items() if k.lower() != "authorization"},
         }
 
         assert "authorization" not in request_data["headers"]

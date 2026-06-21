@@ -2,10 +2,11 @@
 
 import json
 import re
-import httpx
 import unicodedata
+from datetime import UTC, date, datetime
 from pathlib import Path
-from datetime import date, datetime, timezone
+
+import httpx
 
 
 class RawStorageError(Exception):
@@ -64,9 +65,7 @@ def save_raw_search_response(
         "method": request.method,
         "url": str(request.url),
         "params": dict(request.url.params),
-        "headers": {
-            k: v for k, v in request.headers.items() if k.lower() != "authorization"
-        },
+        "headers": {k: v for k, v in request.headers.items() if k.lower() != "authorization"},
     }
 
     metadata = {
@@ -78,7 +77,7 @@ def save_raw_search_response(
         "content_range": response.headers.get("content-range"),
         "accept_range": response.headers.get("accept-range"),
         "result_count": len(response.json().get("resultats", [])),
-        "saved_at": datetime.now(timezone.utc).isoformat(),
+        "saved_at": datetime.now(UTC).isoformat(),
     }
 
     write_json(raw_dir / "headers.json", dict(response.headers))

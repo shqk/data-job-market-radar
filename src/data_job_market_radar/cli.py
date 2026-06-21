@@ -3,13 +3,14 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
+from data_job_market_radar.auth import AuthenticationError, get_access_token
 from data_job_market_radar.config import get_settings
-from data_job_market_radar.auth import get_access_token, AuthenticationError
 from data_job_market_radar.france_travail_client import (
-    FranceTravailClient,
     FranceTravailApiError,
+    FranceTravailClient,
 )
 from data_job_market_radar.storage import save_raw_search_response
+from data_job_market_radar.bronze import read_raw_directory
 
 app = typer.Typer()
 console = Console()
@@ -22,18 +23,13 @@ def api_smoke_test() -> None:
         # console.print(settings)
 
         token = get_access_token(settings=settings)
-        console.print("[green]Token retrieved successfully[/green]")
-        console.print(f"Token type: {token.token_type}")
-        console.print(f"Expires in: {token.expires_in}")
-        console.print(f"Expires at: {token.expires_at}")
-
         client = FranceTravailClient(settings=settings, token=token)
 
         response = client.search_jobs("data engineer", "0-1")
-
-        console.print("[green]Search request succeeded[/green]")
         payload = response.json()
+
         console.print(f"Number of results: {len(payload.get('resultats', []))}")
+
     except AuthenticationError as exc:
         console.print(f"[red]Authentication failed:[/red] {exc}")
         raise SystemExit(1) from exc
@@ -52,14 +48,18 @@ def ingest_raw_sample() -> None:
         query = "data engineer"
         range_ = "0-100"
 
-        response = client.search_jobs("data engineer", "0-100")
+        response = client.search_jobs(query, range_)
 
-        save_raw_search_response(
+        raw_dir = save_raw_search_response(
             Path("data/raw"), query=query, range_=range_, response=response
         )
+        payload = response.json()
 
-        console.print(f"[green] {response}")
-
+        console.print(f"Status: {response.status_code}")
+        console.print(f"Number of results: {len(payload.get('resultats', []))}")
+        console.print(f"Content-Range: {response.headers.get('content-range')}")
+        console.print(f"Saved raw files to: {raw_dir}")
+        
     except AuthenticationError as exc:
         console.print(f"[red]Authentication failed:[/red] {exc}")
         raise SystemExit(1) from exc

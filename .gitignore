@@ -12,3 +12,4 @@ data/gold/
 .vscode
 data/raw/france_travail/offres/search*
 .DS_Store
+src/data_job_market_radar/scratch.py
