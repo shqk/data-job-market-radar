@@ -62,16 +62,16 @@ def test_read_raw_directory(tmp_path):
         json.dump(metadata, f, indent=2)
 
     rows = read_raw_directory(raw_dir)
+    assert len(rows) == 3
+    assert [row["offer_id"] for row in rows] == ["id1", "id2", "id3"]
     assert rows[0] == {
-        "raw_file_path": raw_dir,
+        "raw_file_path": str(raw_dir),
         "offer_id": "id1",
         "search_date": "2026-06-15",
         "query": metadata["query"],
         "range": metadata["range"],
         "source": metadata["source"],
         "saved_at": metadata["saved_at"],
-        "payload": response["resultats"][0],
+        "payload": json.dumps(response["resultats"][0]),
     }
 
-    assert len(rows) == 3
-    assert [row["offer_id"] for row in rows] == ["id1", "id2", "id3"]
