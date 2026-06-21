@@ -1,8 +1,9 @@
 import json
 
+import pytest
 import duckdb
 
-from data_job_market_radar.bronze import initialize_bronze, read_raw_directory
+from data_job_market_radar.bronze import initialize_bronze, read_raw_directory, find_raw_directories
 
 
 def test_initialize_bronze_expected_table():
@@ -23,7 +24,7 @@ def test_initialize_bronze_expected_table():
     connection.close()
 
 
-def test_read_raw_directory(tmp_path):
+def test_read_raw_directory_row(tmp_path):
 
     raw_dir = (
         tmp_path
@@ -74,4 +75,44 @@ def test_read_raw_directory(tmp_path):
         "saved_at": metadata["saved_at"],
         "payload": json.dumps(response["resultats"][0]),
     }
+
+def test_read_raw_directory_row(tmp_path):
+    
+    raw_dir = (
+        tmp_path
+        / "france_travail"
+        / "offres"
+        / "search_date=2026-06-15"
+        / "query=data_engineer"
+        / "range=0-100"
+    )
+    raw_dir.mkdir(parents=True)
+
+    response = {
+        "resultats": [
+            {"id": "id1"},
+            {"id": "id2"},
+            {"id": "id3"},
+        ]
+    }
+
+    with open(raw_dir / "response.json", "w") as f:
+        json.dump(response, f, indent=2)
+
+    with pytest.raises(FileNotFoundError):
+        read_raw_directory(raw_dir)
+    
+
+def test_read_raw_directory_path(tmp_path):
+    raw_dir = (
+        tmp_path
+        / "france_travail"
+        / "offres"
+        / "query=data_engineer"
+        / "range=0-100"
+    )
+    raw_dir.mkdir(parents=True)
+
+    assert read_raw_directory(raw_dir) == []
+    assert len(read_raw_directory(raw_dir)) == 0
 

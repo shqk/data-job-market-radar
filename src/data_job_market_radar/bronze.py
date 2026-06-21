@@ -81,6 +81,7 @@ def read_raw_directory(path: Path) -> list[BronzeRow]:
         return rows
     except FileNotFoundError:
         print("The file doesn't exist.")
+        raise
 
 
 
