@@ -10,7 +10,6 @@ from data_job_market_radar.france_travail_client import (
     FranceTravailClient,
 )
 from data_job_market_radar.storage import save_raw_search_response
-from data_job_market_radar.bronze import read_raw_directory
 
 app = typer.Typer()
 console = Console()
