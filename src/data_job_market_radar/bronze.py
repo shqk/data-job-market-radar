@@ -111,10 +111,22 @@ def write_to_bronze(connection: duckdb.DuckDBPyConnection, rows: list[BronzeRow]
 
 
 # Orchestrate logic
-def load_bronze(connection: duckdb.DuckDBPyConnection):
-    # Start connection
-    # initialize_bronze
-    # read_raw_directory
-    # write_to_bronze
-    # close connection
-    pass
+def load_bronze(offers_path: Path, database_path: Path) -> int:
+    database_path.parent.mkdir(parents=True, exist_ok=True)
+    bronze_connection = duckdb.connect(str(database_path))
+    
+    try:
+        initialize_bronze(connection=bronze_connection)
+
+        before = bronze_connection.execute("SELECT COUNT(*) FROM bronze.france_travail_offres").fetchone()[0]
+        
+        directories = find_raw_directories(offers_path=offers_path)
+
+        for directory in directories:
+            rows = read_raw_directory(directory)
+            write_to_bronze(connection=bronze_connection, rows=rows)
+        
+        after = bronze_connection.execute("SELECT COUNT(*) FROM bronze.france_travail_offres").fetchone()[0]
+        return after - before
+    finally:
+        bronze_connection.close()

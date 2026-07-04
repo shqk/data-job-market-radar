@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import duckdb
 import pytest
@@ -9,6 +10,7 @@ from data_job_market_radar.bronze import (
     initialize_bronze,
     read_raw_directory,
     write_to_bronze,
+    load_bronze
 )
 
 
@@ -295,7 +297,6 @@ def test_write_to_bronze():
     write_to_bronze(connection=connection, rows=rows)
 
     added = connection.execute("SELECT offer_id, payload FROM bronze.france_travail_offres ORDER BY offer_id").fetchall()
-
     assert len(added) == 2
     assert added[0][0] == "209NMRK"
     assert added[1][0] == "209PCPR"
@@ -381,5 +382,17 @@ def test_write_to_bronze_no_rows():
 
     assert len(added) == 0
 
-    connection.close()
+    connection.close()    
 
+def test_load_bronze(tmp_path):
+    fixture_offers_path = Path("tests/fixtures/france_travail/offres")
+    database_path = tmp_path / "data" / "warehouse" / "jobs.duckdb"
+
+
+    inserted = load_bronze(fixture_offers_path, database_path)
+
+    assert inserted == 2
+
+    inserted_again = load_bronze(fixture_offers_path, database_path)
+
+    assert inserted_again == 0

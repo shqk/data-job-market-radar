@@ -1,0 +1,97 @@
+{
+  "resultats": [
+    {
+      "id": "4066270",
+      "intitule": "Data Engineer (F/H) - Socle Data Retail Groupe h/f",
+      "description": "Description de l'entrepriseBPCE Solutions Informatiques, une entreprise dynamique et innovante fait partie du groupe BPCE, 2\u00e8me groupe bancaire fran\u00e7ais. Nos 2600 collaborateurs, pr\u00e9sents sur 19 villes en France, imaginent et inventent, des solutions SI pour faciliter la vie des utilisateurs des Caisses d'\u00e9pargne, des Banques Populaires et de plusieurs autres filiales. Entreprise humaine et engag\u00e9e, notre politique de Responsabilit\u00e9 sociale de l\u2019entreprise porte des sujets cl\u00e9s comme la mixit\u00e9, la diversit\u00e9, le handicap, la qualit\u00e9 de vie au travail et le d\u00e9veloppement durable. Plus de 80 m\u00e9tiers sont pr\u00e9sents au sein de BPCE SI et plus de 50 technologies et langages de d\u00e9veloppement sont utilis\u00e9s dans nos solutions bancaires ! Passionn\u00e9(e) par l'informatique et envie de nouveaux challenges ? Rejoignez nos \u00e9quipes d'experts et intervenez sur nos projets innovants en utilisant les derni\u00e8res tendances technologiques (IA g\u00e9n\u00e9rative, Low Code / No Code, Cloud, DevOps). Alors, pour booster votre carri\u00e8re et profiter de la diversit\u00e9 des terrains de jeux que proposent BPCE Solutions informatiques et le Groupe BPCE, rejoignez-nous ! Poste et missionsAu sein du Produit Socle Data Retail Groupe, vous intervenez dans l\u2019\u00e9quipe sur des activit\u00e9s de data ing\u00e9nierie sur le socle de la plateforme Data du groupe BPCE (sur Google Cloud Platform), l\u2019alimentation des donn\u00e9es distributeurs Retail (BP & CE), et l\u2019accompagnement des \u00e9tablissements et des \u00e9quipes IT/m\u00e9tiers du Groupe BPCE, utilisateurs de la plateforme. En tant que membre du produit, vous contribuez \u00e0 la gestion du patrimoine en build et en run : am\u00e9lioration continue des processus du produit (documentation, communication, collaboration\u2026) , qualit\u00e9, maintenabilit\u00e9, exploitabilit\u00e9, robustesse, performance\u2026 Sur la base des expressions de besoins auxquelles vous contribuez : Vous d\u00e9finissez les sp\u00e9cifications, concevez, d\u00e9veloppez et mettez \u00e0 disposition des solutions logicielles et des donn\u00e9es sur la plateforme \u00ab Google Cloud Platform \u00bb \u00e0 destination des Data Scientists et Data analyst du groupe Vous participez \u00e0 la r\u00e9solution des incidents et effectuez le support aux utilisateurs Vous aurez en charge les activit\u00e9s de Data Ing\u00e9nierie sur l\u2019\u00e9cosyst\u00e8me Big Data h\u00e9berg\u00e9e sur la Google Cloud Platform (GCP) servant aux cas d\u2019usages Data des \u00e9tablissements BP & CE, ou de l\u2019organe Central : Construire les flux d\u2019alimentation de donn\u00e9es de la plateforme : alimentation du Datalake avec les donn\u00e9es sources des BP et CE ou des donn\u00e9es externes (open Data), exposition, exports, en utillisant un outillage d\u2019ingestion existant (surcouhe des API Google), Configurer les composants logiciels, les tester, les assembler et les mettre \u00e0 disposition pour mise en production par les \u00e9quipes d\u2019infog\u00e9rance (ops), Assurer le suivi de production, en lien avec les \u00e9quipes d\u2019infog\u00e9rance (sans astreinte en heures non ouvr\u00e9es) et les utilisateurs des donn\u00e9es de la plateforme, la maintenance corrective ou \u00e9volutive des flux d\u2019alimentation et exposition de donn\u00e9es dans le Datalake, s\u2019assurer de leur comportement, leur pertinence dans le temps, Accompagner les \u00e9quipes Data internes BPCE-SI sur les briques applicatives de la plateforme (outils internes et GCP, habilitations, alimentation des donn\u00e9es\u2026), Assister les Data Scientist et les Data analysts \u00e0 l\u2019analyse, la pr\u00e9paration des donn\u00e9es, l\u2019exposition, la connaissance des outils, Optimiser les traitements pour une meilleure performance ou limiter les co\u00fbts (Finops) Optimiser la qualit\u00e9 de service (QoS) et la qualit\u00e9 des donn\u00e9es en proposant des solutions de contr\u00f4le, des outils de mesure et de reporting (m\u00e9trologie, tableaux de bord Power BI..) Assurer le r\u00f4le de release management de la plateforme CDPG sur le comptoir Distributeurs En lien avec les producteurs des donn\u00e9es, vous participez \u00e9galement \u00e0 des activit\u00e9s de Data Analyse : Obtenir des donn\u00e9es ad\u00e9quates, trouver les sources de donn\u00e9es pertinentes, faire des recommandations sur les donn\u00e9es \u00e0 consolider, transformer, rapatrier, consolider au sein des couches socle et d\u2019exposition (accessibles directement aux usages avec le Data sharing), Analyser les donn\u00e9es pour traduire une probl\u00e9matique M\u00e9tier. Profil et comp\u00e9tences requisesDe formation Bac +4/+5 (de pr\u00e9f\u00e9rence sp\u00e9cialis\u00e9e dans la Data), vous justifiez d'une exp\u00e9rience significative de 2 ans minimum sur un poste similaire dans un contexte agile. Vous maitrisez les comp\u00e9tences techniques suivantes : Syst\u00e8me de base de donn\u00e9es Big Query ou \u00e9quivalent sur un autre Cloud Data analyse et connaissance de syst\u00e8mes d\u00e9cisionnels : bonne ma\u00eetrise du SQL (sur des syst\u00e8mes \u00e9quivalents \u00e0 Teradata ou Exadata) Vous avez de l\u2019exp\u00e9rience et/ou \u00eates app\u00e9tents sur les comp\u00e9tences techniques suivantes : Conception/mod\u00e9lisation des donn\u00e9es (avec Power Designer ou \u00e9quivalent) Connaissance des concepts cl\u00e9s li\u00e9s \u00e0 la mise en \u0153uvre d'une chaine CI/CD (int\u00e9gration continue notamment). La connaissance des outils li\u00e9 \u00e0 ces concepts serait un plus (Jenkins, Bitbu...",
+      "dateCreation": "2026-06-20T22:29:07.000Z",
+      "dateActualisation": "2026-06-20T22:29:07.000Z",
+      "lieuTravail": {
+        "libelle": "59 - Villeneuve-d'Ascq",
+        "latitude": 50.619793,
+        "longitude": 3.160295,
+        "codePostal": "59491",
+        "commune": "59009"
+      },
+      "romeCode": "M1811",
+      "romeLibelle": "Data engineer",
+      "appellationlibelle": "Big data engineer",
+      "entreprise": {
+        "description": "Groupe BPCE"
+      },
+      "typeContrat": "CDI",
+      "typeContratLibelle": "CDI",
+      "natureContrat": "Contrat travail",
+      "experienceExige": "E",
+      "experienceLibelle": "Exp\u00e9rience exig\u00e9e",
+      "salaire": {},
+      "dureeTravailLibelle": "\nTravail en journ\u00e9e",
+      "alternance": false,
+      "contact": {},
+      "nombrePostes": 1,
+      "origineOffre": {
+        "origine": "2",
+        "urlOrigine": "https://candidat.francetravail.fr/offres/recherche/detail/4066270",
+        "partenaires": [
+          {
+            "nom": "JOBINLIVE",
+            "url": "http://www.missionhandicap.com/emploi/BPCE-BPCE_INFO01860#utm_source=PoleEmploi",
+            "logo": "https://www.francetravail.fr/logos/img/partenaires/jobinlive80.png"
+          }
+        ]
+      },
+      "contexteTravail": {
+        "horaires": ["\nTravail en journ\u00e9e"]
+      },
+      "entrepriseAdaptee": false,
+      "employeurHandiEngage": false
+    },
+    {
+      "id": "4007869",
+      "intitule": "Data Engineer IICS / Snowflake (H/F)",
+      "description": "Depuis sa cr\u00e9ation, KLANIK s'est donn\u00e9e pour mission de conjuguer expertise technologique et authenticit\u00e9. Ce pari audacieux, n\u00e9 \u00e0 Marseille en 2011, en France, s'est transform\u00e9 en une aventure internationale qui compte aujourd'hui plus de 800 collaborateurs, des implantations dans 10 pays et des filiales innovantes. Nous rejoignons en 2026 le groupe ALTEN, acteur mondial de l'ing\u00e9nierie et des services num\u00e9riques. Notre r\u00f4le : recruter les meilleurs talents & les connecter \u00e0 nos clients pour les accompagner dans leurs projets digitaux. KLANIK est une soci\u00e9t\u00e9 de conseil en informatique structur\u00e9e autour de 5 p\u00f4les d'expertises : Data & IA, DevOps Cloud Infra, Cybers\u00e9curit\u00e9, Software, Produit Agilit\u00e9 Pilotage. Nos 800 talents ont des profils vari\u00e9s : tech (nos p\u00f4les d'expertises), op\u00e9rationnels (fonctions commerciales et recrutement) et support. Au?del\u00e0 des m\u00e9tiers, KLANIK cultive un mod\u00e8le profond\u00e9ment humain, qui d\u00e9passe les fronti\u00e8res : de la Belgique \u00e0 la Colombie, nos valeurs r\u00e9sonnent. Une culture fond\u00e9e sur le partage, l'exigence et la bienveillance - un collectif o\u00f9 chacun peut trouver sa place. En t\u00e9moignent nos filiales : - Klanik Esport : club Esport & agence de gamification; - Korner : incubateur de startups tech; - Kampus : organisme de formation certifi\u00e9 Qualiopi - l'Act'In Klanik, r\u00f4les qui permettent \u00e0 nos collaborateurs de faire vivre leurs passions au-del\u00e0 de leurs missions. Notre culture est r\u00e9sum\u00e9e par cette phrase, souvent appos\u00e9e sous notre logo : Human-Made Technology. La tech oui, mais une tech humaine, qui diffuse un mod\u00e8le o\u00f9 l'authenticit\u00e9 de chacun est la priorit\u00e9. KLANIK, en tant que soci\u00e9t\u00e9 \u00e0 mission, croit en la force de la diversit\u00e9 et de l'inclusion. Nos recrutements sont fond\u00e9s sur les comp\u00e9tences, sans distinction d'origine, d'\u00e2ge ou de genre, et tous nos postes sont ouverts aux personnes en situation de handicap. Nous sommes convaincus que la diversit\u00e9 de nos \u00e9quipes est une force qui contribue \u00e0 notre succ\u00e8s. Le poste : Notre agence renforce ses \u00e9quipes et recherche un Data Engineer exp\u00e9riment\u00e9 (H/F) pour accompagner un acteur majeur du secteur pharmaceutique dans l'\u00e9volution et l'optimisation de sa plateforme Data. Vous interviendrez sur des sujets d'int\u00e9gration, de transformation et d'exploitation de la donn\u00e9e, au sein d'un environnement moderne reposant sur Informatica Intelligent Cloud Services (IICS) et Snowflake. Votre mission Concevoir, d\u00e9velopper et maintenir les flux de donn\u00e9es n\u00e9cessaires \u00e0 l'alimentation et \u00e0 l'exploitation de la plateforme Data, tout en garantissant la performance, la qualit\u00e9 et la fiabilit\u00e9 des traitements. Vos responsabilit\u00e9s - Analyser les besoins m\u00e9tiers et les diff\u00e9rentes sources de donn\u00e9es. - Concevoir, d\u00e9velopper et maintenir les flux d'int\u00e9gration de donn\u00e9es avec Informatica IICS. - Participer \u00e0 l'alimentation et \u00e0 l'optimisation de la plateforme Snowflake. - D\u00e9velopper et am\u00e9liorer les pipelines de donn\u00e9es dans une logique de performance et de qualit\u00e9. - Participer \u00e0 la mod\u00e9lisation des donn\u00e9es et aux \u00e9volutions de l'architecture Data. - Assurer le monitoring, le support et la r\u00e9solution des incidents. - Collaborer avec les \u00e9quipes Data, BI et M\u00e9tiers afin de r\u00e9pondre aux besoins d'analyse et de reporting. - Contribuer \u00e0 la documentation et \u00e0 la diffusion des bonnes pratiques. #LI-JD1 Profil recherch\u00e9 : Vous \u00eates Data Engineer confirm\u00e9(e) - Vous justifiez d'au moins 5 ans d'exp\u00e9rience en Data Engineering. - Vous disposez d'une exp\u00e9rience significative sur Informatica Intelligent Cloud Services (IICS). - Vous ma\u00eetrisez les environnements Snowflake et les probl\u00e9matiques d'int\u00e9gration de donn\u00e9es \u00e0 grande \u00e9chelle. Vos qualit\u00e9s - Esprit d'analyse et de synth\u00e8se. - Autonomie et rigueur. - Bon relationnel et capacit\u00e9 \u00e0 travailler en \u00e9quipe. - Sens du service et orientation r\u00e9sultats. Environnement - M\u00e9thodologie Agile. - Fran\u00e7ais et anglais courants. - T\u00e9l\u00e9travail possible jusqu'\u00e0 100 %.",
+      "dateCreation": "2026-06-19T11:21:33.000Z",
+      "dateActualisation": "2026-06-19T11:21:33.000Z",
+      "lieuTravail": {
+        "libelle": "31 - Toulouse",
+        "latitude": 43.597868,
+        "longitude": 1.430199,
+        "codePostal": "31000",
+        "commune": "31555"
+      },
+      "romeCode": "M1868",
+      "romeLibelle": "Architecte base de donn\u00e9es",
+      "appellationlibelle": "Architecte de bases de donn\u00e9es",
+      "entreprise": {
+        "description": "KLANIK"
+      },
+      "typeContrat": "CDI",
+      "typeContratLibelle": "CDI",
+      "natureContrat": "Contrat travail",
+      "experienceExige": "E",
+      "experienceLibelle": "5 An(s)",
+      "salaire": {},
+      "dureeTravailLibelle": "\nTravail en journ\u00e9e",
+      "complementExercice": "Temps plein",
+      "alternance": false,
+      "contact": {},
+      "nombrePostes": 1,
+      "origineOffre": {
+        "origine": "2",
+        "urlOrigine": "https://candidat.francetravail.fr/offres/recherche/detail/4007869",
+        "partenaires": [
+          {
+            "nom": "PMEJOB",
+            "url": "https://www.jobposting.pro/emploi-2620280-120",
+            "logo": "https://www.francetravail.fr/logos/img/partenaires/pmejob80.png"
+          }
+        ]
+      },
+      "contexteTravail": {
+        "horaires": ["\nTravail en journ\u00e9e"]
+      },
+      "entrepriseAdaptee": false,
+      "employeurHandiEngage": false
+    }
+  ]
+}

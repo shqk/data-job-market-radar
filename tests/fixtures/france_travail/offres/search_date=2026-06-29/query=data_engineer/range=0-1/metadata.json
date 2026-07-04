@@ -1,0 +1,11 @@
+{
+  "source": "france_travail",
+  "endpoint": "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search",
+  "query": "data engineer",
+  "range": "0-1",
+  "status_code": 206,
+  "content_range": "offres 0-1/453",
+  "accept_range": "150",
+  "result_count": 2,
+  "saved_at": "2026-06-29T10:16:30.324226+00:00"
+}

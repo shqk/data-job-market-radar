@@ -10,6 +10,10 @@ from data_job_market_radar.france_travail_client import (
     FranceTravailClient,
 )
 from data_job_market_radar.storage import save_raw_search_response
+from data_job_market_radar.bronze import load_bronze
+
+import duckdb
+
 
 app = typer.Typer()
 console = Console()
@@ -45,20 +49,21 @@ def ingest_raw_sample() -> None:
 
         client = FranceTravailClient(settings=settings, token=token)
         query = "data engineer"
-        range_ = "0-100"
+        range_ = "101-150"
 
         response = client.search_jobs(query, range_)
 
         raw_dir = save_raw_search_response(
             Path("data/raw"), query=query, range_=range_, response=response
         )
-        payload = response.json()
 
-        console.print(f"Status: {response.status_code}")
-        console.print(f"Number of results: {len(payload.get('resultats', []))}")
-        console.print(f"Content-Range: {response.headers.get('content-range')}")
-        console.print(f"Saved raw files to: {raw_dir}")
+        print(load_bronze(offers_path=Path("data/raw/france_travail/offres/"), database_path=Path("data/warehouse/jobs.duckdb")))
+        connection = duckdb.connect("data/warehouse/jobs.duckdb")
         
+        print("lolilol")
+        print(connection.execute("SELECT COUNT(*) FROM bronze.france_travail_offres").fetchone()[0])
+        connection.close()
+
     except AuthenticationError as exc:
         console.print(f"[red]Authentication failed:[/red] {exc}")
         raise SystemExit(1) from exc
