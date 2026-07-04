@@ -8,9 +8,9 @@ from data_job_market_radar.bronze import (
     BronzeRow,
     find_raw_directories,
     initialize_bronze,
+    load_bronze,
     read_raw_directory,
     write_to_bronze,
-    load_bronze
 )
 
 

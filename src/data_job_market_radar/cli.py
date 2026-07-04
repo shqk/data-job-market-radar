@@ -9,11 +9,7 @@ from data_job_market_radar.france_travail_client import (
     FranceTravailApiError,
     FranceTravailClient,
 )
-from data_job_market_radar.storage import save_raw_search_response
-from data_job_market_radar.bronze import load_bronze
-
-import duckdb
-
+from data_job_market_radar.ingestion import ingest_raw_search
 
 app = typer.Typer()
 console = Console()
@@ -42,27 +38,14 @@ def api_smoke_test() -> None:
 
 
 @app.command()
-def ingest_raw_sample() -> None:
+def ingest_raw_sample(query: str = typer.Option("data engineer", "--query", "-q")) -> None:
     try:
         settings = get_settings()
         token = get_access_token(settings=settings)
 
         client = FranceTravailClient(settings=settings, token=token)
-        query = "data engineer"
-        range_ = "101-150"
-
-        response = client.search_jobs(query, range_)
-
-        raw_dir = save_raw_search_response(
-            Path("data/raw"), query=query, range_=range_, response=response
-        )
-
-        print(load_bronze(offers_path=Path("data/raw/france_travail/offres/"), database_path=Path("data/warehouse/jobs.duckdb")))
-        connection = duckdb.connect("data/warehouse/jobs.duckdb")
-        
-        print("lolilol")
-        print(connection.execute("SELECT COUNT(*) FROM bronze.france_travail_offres").fetchone()[0])
-        connection.close()
+        saved_batches = ingest_raw_search(client=client, query=query, base_dir=Path("data/raw"))
+        console.print(f"Saved raw batches: {saved_batches}")
 
     except AuthenticationError as exc:
         console.print(f"[red]Authentication failed:[/red] {exc}")
