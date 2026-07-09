@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: france_travail
+    schema: bronze
+    tables:
+      - name: france_travail_offres

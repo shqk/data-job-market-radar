@@ -1,0 +1,11 @@
+# A quelle base de données dbt se connecte
+
+analytics_duckdb:
+  target: dev #pourquoi ecrire dev ici
+
+  outputs:
+    dev: # différence entre ce dev et celui de target ?
+      type: duckdb
+      path: data/warehouse/jobs.duckdb
+      schema: main
+      threads: 1

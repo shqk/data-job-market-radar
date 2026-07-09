@@ -6,9 +6,9 @@ readme = "README.md"
 authors = [
     { name = "Nathan", email = "63520059+shqk@users.noreply.github.com" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.12,<3.13"
 dependencies = [
-    "dbt-core>=1.11.8",
+    "dbt-core>=1.11.12",
     "dbt-duckdb>=1.10.1",
     "duckdb>=1.5.2",
     "httpx>=0.28.1",

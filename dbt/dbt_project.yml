@@ -1,0 +1,23 @@
+# Organisation du projet
+
+name: 'data_job_market_radar'
+version: '1.0.0'
+config-version: 2
+
+profile: 'analytics_duckdb'
+
+model-paths: ['models']
+
+target-path: 'target'
+
+models:
+  data_job_market_radar:
+    +materialized: view
+
+    staging:
+      +materialized: view
+      +schema: staging
+
+    gold:
+      +materialized: table
+      +schema: gold

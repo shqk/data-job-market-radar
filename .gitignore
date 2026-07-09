@@ -13,3 +13,7 @@ data/gold/
 data/raw/france_travail/offres/search*
 .DS_Store
 src/data_job_market_radar/scratch.py
+
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
