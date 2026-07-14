@@ -2,6 +2,80 @@ version: 2
 
 sources:
   - name: france_travail
+    description: >-
+      Raw job-offer data retrieved from the France Travail API. A Python pipeline stores each
+      API response as JSON files and loads the individual offers into DuckDB. dbt only reads
+      this source as input to downstream transformations.
     schema: bronze
+    loader: python
     tables:
       - name: france_travail_offres
+        description: >-
+          Bronze occurrences of job offers loaded from raw France Travail API response
+          directories. One row represents one offer found in one raw response directory. The
+          table grain and primary key are (raw_directory_path, offer_id), so the same offer_id
+          may appear in several rows when an offer is returned by multiple searches or on
+          multiple collection dates.
+        data_tests:
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                combination_of_columns:
+                  - raw_directory_path
+                  - offer_id
+        columns:
+          - name: raw_directory_path
+            description: >-
+              Path to the raw directory containing the response.json and metadata.json files
+              from which the row was loaded. Part of the composite primary key with offer_id.
+            data_tests:
+              - not_null
+
+          - name: offer_id
+            description: >-
+              France Travail identifier taken from the offer's id field. Part of the composite
+              primary key with raw_directory_path; it is not unique across raw directories.
+            data_tests:
+              - not_null
+
+          - name: search_date
+            description: >-
+              Date on which the API search was collected, extracted from the raw directory
+              path. This is a collection date, not the offer publication date.
+            data_tests:
+              - not_null
+
+          - name: query
+            description: Search keywords sent to the France Travail API for this raw response.
+            data_tests:
+              - not_null
+
+          - name: range
+            description: Requested API pagination range, for example 0-149.
+            data_tests:
+              - not_null
+
+          - name: source
+            description: Technical source name read from the raw metadata.
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values:
+                      - france_travail
+
+          - name: saved_at
+            description: UTC timestamp recorded when the raw API response files were saved.
+            data_tests:
+              - not_null
+
+          - name: loaded_at
+            description: Timestamp assigned by DuckDB when the offer row was loaded into bronze.
+            data_tests:
+              - not_null
+
+          - name: payload
+            description: >-
+              Complete JSON object for the offer as returned in the API response's resultats
+              array. It is preserved in bronze for field extraction by downstream dbt models.
+            data_tests:
+              - not_null

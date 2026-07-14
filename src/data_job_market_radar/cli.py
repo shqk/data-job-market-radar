@@ -11,6 +11,8 @@ from data_job_market_radar.france_travail_client import (
 )
 from data_job_market_radar.ingestion import ingest_raw_search
 
+import duckdb # a supprimer
+
 app = typer.Typer()
 console = Console()
 
@@ -46,6 +48,9 @@ def ingest_raw_sample(query: str = typer.Option("data engineer", "--query", "-q"
         client = FranceTravailClient(settings=settings, token=token)
         saved_batches = ingest_raw_search(client=client, query=query, base_dir=Path("data/raw"))
         console.print(f"Saved raw batches: {saved_batches}")
+
+        connection = duckdb.connect('data/warehouse/jobs.duckdb')
+        connection.sql("SELECT * FROM bronze.france_travail_offres LIMIT 50").show()
 
     except AuthenticationError as exc:
         console.print(f"[red]Authentication failed:[/red] {exc}")
