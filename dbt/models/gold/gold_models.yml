@@ -1,0 +1,242 @@
+version: 2
+
+models:
+  - name: fct_job_offers
+    description: >-
+      Deduplicated France Travail job offers observed by the project. One row represents one
+      offer_id, selected from its latest collected occurrence, with observation metadata
+      aggregated across searches.
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "offer_updated_at >= offer_created_at"
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "last_seen_on >= first_seen_on"
+    columns:
+      - name: offer_id
+        description: Unique France Travail offer identifier and model primary key.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: title
+        description: Title from the latest observed occurrence of the offer.
+        data_tests:
+          - not_null
+
+      - name: description
+        description: Full description from the latest observed occurrence of the offer.
+
+      - name: company_name
+        description: Company name when supplied by France Travail.
+
+      - name: offer_created_at
+        description: Timestamp at which the offer was created.
+        data_tests:
+          - not_null
+
+      - name: offer_updated_at
+        description: Timestamp at which the selected offer occurrence was last updated.
+        data_tests:
+          - not_null
+
+      - name: first_seen_on
+        description: First collection date on which the project observed the offer.
+        data_tests:
+          - not_null
+
+      - name: last_seen_on
+        description: Most recent collection date on which the project observed the offer.
+        data_tests:
+          - not_null
+
+      - name: observation_count
+        description: Number of bronze occurrences observed for the offer.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: search_query_count
+        description: Number of distinct search queries that returned the offer.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: contract_type_code
+        description: France Travail contract-type code.
+        data_tests:
+          - not_null
+
+      - name: contract_type_label
+        description: Detailed contract label from the latest occurrence.
+
+      - name: is_alternance
+        description: Whether the offer is an apprenticeship or work-study offer.
+        data_tests:
+          - not_null
+
+      - name: positions_count
+        description: >-
+          Number of positions advertised by this one offer; this is not a count of distinct
+          offers.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: work_location_label
+        description: Human-readable work-location label.
+        data_tests:
+          - not_null
+
+      - name: postal_code
+        description: Work-location postal code when supplied.
+
+      - name: city_code
+        description: INSEE commune code when supplied.
+
+      - name: latitude
+        description: Work-location latitude when supplied.
+
+      - name: longitude
+        description: Work-location longitude when supplied.
+
+      - name: offer_url
+        description: Public URL of the offer.
+        data_tests:
+          - not_null
+
+      - name: source_name
+        description: Technical source name.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - france_travail
+
+  - name: agg_job_offers_by_contract
+    description: One row per contract-type code with offer and advertised-position metrics.
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "alternance_offer_count <= offer_count"
+    columns:
+      - name: contract_type_code
+        description: France Travail contract-type code and model grain.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: offer_count
+        description: >-
+          Number of deduplicated observed offers for the contract type, regardless of how many
+          positions each offer advertises.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: total_positions_count
+        description: >-
+          Sum of positions_count for the contract type; one offer may contribute several
+          advertised positions.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: alternance_offer_count
+        description: Number of alternance offers for the contract type.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: offer_share_pct
+        description: Percentage of deduplicated observed offers represented by the contract type.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+
+  - name: agg_job_offers_by_location
+    description: >-
+      One row per observed work-location label, postal code and commune code, with averaged
+      coordinates and offer metrics.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - work_location_label
+              - postal_code
+              - city_code
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "alternance_offer_count <= offer_count"
+    columns:
+      - name: work_location_label
+        description: Human-readable work-location label and part of the model grain.
+        data_tests:
+          - not_null
+
+      - name: postal_code
+        description: Postal code and part of the model grain when supplied.
+
+      - name: city_code
+        description: INSEE commune code and part of the model grain when supplied.
+
+      - name: latitude
+        description: Average latitude of offers in the location when coordinates are supplied.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -90
+                max_value: 90
+
+      - name: longitude
+        description: Average longitude of offers in the location when coordinates are supplied.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -180
+                max_value: 180
+
+      - name: offer_count
+        description: >-
+          Number of deduplicated observed offers in the location, regardless of how many
+          positions each offer advertises.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: total_positions_count
+        description: >-
+          Sum of positions_count in the location; one offer may contribute several advertised
+          positions.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: alternance_offer_count
+        description: Number of alternance offers in the location.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

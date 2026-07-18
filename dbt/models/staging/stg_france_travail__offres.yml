@@ -1,0 +1,119 @@
+version: 2
+
+models:
+  - name: stg_france_travail__offres
+    description: >-
+      Lightly cleaned and typed France Travail job-offer occurrences. The model preserves the
+      bronze grain of one row per (raw_directory_path, offer_id) and does not deduplicate offers.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - raw_directory_path
+              - offer_id
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: source('france_travail', 'france_travail_offres')
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "offer_updated_at >= offer_created_at"
+    columns:
+      - name: raw_directory_path
+        description: Raw response directory from which the offer occurrence was loaded.
+        data_tests:
+          - not_null
+
+      - name: offer_id
+        description: France Travail offer identifier; not unique at the staging grain.
+        data_tests:
+          - not_null
+
+      - name: collected_on
+        description: Date on which the API search was collected.
+        data_tests:
+          - not_null
+
+      - name: search_query
+        description: Search keywords that returned the offer occurrence.
+
+      - name: search_range
+        description: API pagination range that contained the offer occurrence.
+
+      - name: source_name
+        description: Technical source name inherited from the raw metadata.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - france_travail
+
+      - name: raw_saved_at
+        description: Timestamp at which the raw API response was saved.
+
+      - name: bronze_loaded_at
+        description: Timestamp at which the occurrence was loaded into the bronze table.
+
+      - name: title
+        description: Job-offer title extracted from the API payload.
+        data_tests:
+          - not_null
+
+      - name: description
+        description: Full job description extracted from the API payload.
+
+      - name: offer_created_at
+        description: Timestamp at which France Travail reports that the offer was created.
+        data_tests:
+          - not_null
+
+      - name: offer_updated_at
+        description: Timestamp at which France Travail reports that the offer was last updated.
+        data_tests:
+          - not_null
+
+      - name: company_name
+        description: Company name when supplied by the API.
+
+      - name: contract_type_code
+        description: France Travail contract-type code, such as CDI, CDD, MIS or LIB.
+        data_tests:
+          - not_null
+
+      - name: contract_type_label
+        description: Detailed contract label, which may include a fixed-term duration.
+
+      - name: is_alternance
+        description: Whether the offer is an apprenticeship or work-study offer.
+        data_tests:
+          - not_null
+
+      - name: positions_count
+        description: Number of positions advertised by the offer.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+
+      - name: work_location_label
+        description: Human-readable work-location label returned by France Travail.
+        data_tests:
+          - not_null
+
+      - name: postal_code
+        description: Work-location postal code when supplied by the API.
+
+      - name: city_code
+        description: INSEE commune code when supplied by the API.
+
+      - name: latitude
+        description: Work-location latitude when supplied by the API.
+
+      - name: longitude
+        description: Work-location longitude when supplied by the API.
+
+      - name: offer_url
+        description: Public URL of the job offer.
+        data_tests:
+          - not_null
